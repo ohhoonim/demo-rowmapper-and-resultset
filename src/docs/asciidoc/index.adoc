@@ -1,0 +1,26 @@
+= Smart Factory API Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+[[introduction]]
+== 소개
+이 문서는 Smart Factory 프로젝트의 API 명세서입니다. 모든 API는 Spring REST Docs를 통해 실제 테스트 케이스를 바탕으로 생성되었습니다.
+
+[[common]]
+== 공통 응답 규격
+모든 API 응답은 아래와 같은 공통 규격을 따릅니다.
+
+[source,json]
+----
+{
+    "code": "SUCCESS",
+    "data": { ... },
+    "message": "요청이 성공적으로 처리되었습니다."
+}
+----
+
+include::modules/cart.adoc[]

@@ -1,0 +1,79 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '4.0.6'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.asciidoctor.jvm.convert' version '4.0.4'
+}
+
+group = 'dev.ohhoonim'
+version = '0.0.1-SNAPSHOT'
+
+configurations {
+	asciidoctorExtensions
+}
+
+ext {
+	set('springModulithVersion', '2.0.1')
+	snippetsDir = file('build/generated-snippets')
+}
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+	// options
+	implementation 'com.github.f4b6a3:ulid-creator:5.2.3'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+	runtimeOnly 'org.postgresql:postgresql'
+	testImplementation 'org.springframework.boot:spring-boot-starter-jdbc-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+	// testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+	testImplementation 'org.testcontainers:testcontainers-junit-jupiter'
+	testImplementation 'org.testcontainers:testcontainers-postgresql'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	// modulith
+	implementation 'org.springframework.modulith:spring-modulith-starter-jdbc'
+	implementation 'org.springframework.modulith:spring-modulith-starter-insight' // actuator 포함
+	testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
+	// rest docs
+	testImplementation 'org.springframework.boot:spring-boot-starter-restdocs'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor:3.0.2'
+	asciidoctorExtensions 'org.asciidoctor:asciidoctorj:2.5.13'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+tasks.named("asciidoctor") {
+	dependsOn test
+	inputs.dir snippetsDir
+	configurations "asciidoctorExtensions"
+
+	sourceDir = file('src/docs/asciidoc')
+	baseDirFollowsSourceDir()
+	outputDir = file('build/api-spec')
+
+	attributes (
+		'snippets': snippetsDir,
+		'toc': 'left',
+		'icons': 'font'
+	)
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.modulith:spring-modulith-bom:${springModulithVersion}"
+	}
+}

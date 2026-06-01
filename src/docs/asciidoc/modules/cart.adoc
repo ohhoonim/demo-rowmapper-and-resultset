@@ -1,0 +1,73 @@
+[[cart]]
+== 장바구니 (Cart)
+
+장바구니는 고객이 구매할 상품을 임시로 보관하고 관리하는 기능을 제공합니다.
+
+=== 장바구니 조회
+`GET /api/cart`
+
+==== 요청 파라미터
+include::{snippets}/cart-view/query-parameters.adoc[]
+
+==== 요청 예시
+include::{snippets}/cart-view/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/cart-view/http-response.adoc[]
+
+==== 응답 필드
+include::{snippets}/cart-view/response-fields.adoc[]
+
+=== 장바구니 담기
+`POST /api/cart/items`
+
+==== 요청 필드
+include::{snippets}/cart-add-item/request-fields.adoc[]
+
+==== 요청 예시
+include::{snippets}/cart-add-item/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/cart-add-item/http-response.adoc[]
+
+=== 수량 변경
+`PATCH /api/cart/items/{itemId}`
+
+==== 경로 변수
+include::{snippets}/cart-update-quantity/path-parameters.adoc[]
+
+==== 요청 필드
+include::{snippets}/cart-update-quantity/request-fields.adoc[]
+
+==== 요청 예시
+include::{snippets}/cart-update-quantity/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/cart-update-quantity/http-response.adoc[]
+
+=== 항목 삭제
+`DELETE /api/cart/items/{itemId}`
+
+==== 경로 변수
+include::{snippets}/cart-remove-item/path-parameters.adoc[]
+
+==== 요청 파라미터
+include::{snippets}/cart-remove-item/query-parameters.adoc[]
+
+==== 요청 예시
+include::{snippets}/cart-remove-item/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/cart-remove-item/http-response.adoc[]
+
+=== 장바구니 비우기
+`DELETE /api/cart`
+
+==== 요청 파라미터
+include::{snippets}/cart-clear/query-parameters.adoc[]
+
+==== 요청 예시
+include::{snippets}/cart-clear/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/cart-clear/http-response.adoc[]

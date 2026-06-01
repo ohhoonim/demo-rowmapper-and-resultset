@@ -1,0 +1,101 @@
+{
+  "stereotypes": {
+    "5sa.EntityId": {
+      "name": "EntityId",
+      "assignments": [
+        "dev.ohhoonim.component.model.unit.EntityId"
+      ],
+      "groups": [
+        "5sa"
+      ]
+    },
+    "5sa.AggregateRoot": {
+      "name": "Aggregate Root",
+      "assignments": [
+        "dev.ohhoonim.component.model.unit.BaseEntity"
+      ],
+      "groups": [
+        "5sa"
+      ]
+    },
+    "5sa.StatePolicy": {
+      "name": "State Policy",
+      "assignments": [
+        "dev.ohhoonim.component.model.state.StateTransitionPolicy"
+      ],
+      "groups": [
+        "5sa"
+      ]
+    },
+    "5sa.ArFactory": {
+      "name": "AR Factory",
+      "assignments": [
+        "dev.ohhoonim.component.model.factory.ArFactory"
+      ],
+      "groups": [
+        "5sa"
+      ]
+    },
+    "5sa.Endpoint": {
+      "name": "DTO",
+      "assignments": [
+        "dev.ohhoonim.component.model.unit.Endpoint"
+      ],
+      "groups": [
+        "5sa"
+      ]
+    },
+    "5sa.DTO": {
+      "name": "DTO",
+      "assignments": [
+        "@dev.ohhoonim.component.model.payload.Dto"
+      ],
+      "groups": [
+        "5sa"
+      ]
+    },
+    "5sa.ValueObject": {
+      "name": "ValueObject",
+      "assignments": [
+        "@dev.ohhoonim.component.model.unit.ValueObject"
+      ],
+      "groups": [
+        "5sa"
+      ]
+    },
+    "5sa.Activity": {
+      "name": "Activity",
+      "assignments": [
+        "@dev.ohhoonim.component.model.unit.Activity"
+      ],
+      "groups": [
+        "5sa"
+      ]
+    },
+    "5sa.Adapter": {
+      "name": "Adapter",
+      "assignments": [
+        "@dev.ohhoonim.component.model.unit.Adapter"
+      ],
+      "groups": [
+        "5sa"
+      ]
+    },
+    "5sa.Policy": {
+      "name": "Adapter",
+      "assignments": [
+        "@dev.ohhoonim.component.model.unit.Policy"
+      ],
+      "groups": [
+        "5sa"
+      ]
+    }
+  },
+  "groups": {
+    "5sa": {
+      "displayName": "5SA",
+      "type": "design"
+    }
+    
+  }
+}
