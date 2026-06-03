@@ -13,12 +13,15 @@ Domain Factory는 도메인 애그리거트(AR)를 저장소로부터 복원(Rec
 
 ### 2) Component (Value Objects)
 애그리거트의 상태를 구성하는 필드들을 논리적인 단위로 묶은 Java Record입니다.
-- **Marker Interface**: `sealed interface` 등을 사용하여 해당 애그리거트에 속한 컴포넌트임을 명시합니다.
-- **Selective Loading**: 유스케이스에 따라 필요한 컴포넌트만 DB에서 조회하여 메모리 사용량과 쿼리 효율을 높입니다.
+- Marker Interface: `sealed interface` 등을 사용하여 해당 애그리거트에 속한 컴포넌트임을 명시합니다.
+- Selective Loading: 유스케이스에 따라 필요한 컴포넌트만 DB에서 조회하여 메모리 사용량과 쿼리 효율을 높입니다.
+- `domain-vo-skill.md` 참고
 
 ## 3. 구현 표준 공정
 
-### Step 1: Factory Port 정의 (Activity Layer)
+- 도메인 계층: `domain-module-skill.md` 참고
+
+### Step 1: Factory Port 정의 (Activity.out Layer)
 유스케이스별로 자주 사용되는 컴포넌트 조합을 `default method`로 정의합니다.
 ```java
 public interface PostArFactory extends ArFactory<Post, PostId, PostComponent> {
@@ -29,13 +32,13 @@ public interface PostArFactory extends ArFactory<Post, PostId, PostComponent> {
 }
 ```
 
-### Step 2: Factory Adapter 구현 (Infrastructure Layer)
+### Step 2: Factory Adapter 구현 (Infra.adapter Layer)
 기술적 데이터를 도메인 모델로 매핑하는 상세 로직을 구현합니다.
 
-1.  **resolveRequiredColumns**: 
+1.  resolveRequiredColumns: 
     - 리플렉션을 사용하여 Record의 필드명을 DB 컬럼명(Snake Case)으로 자동 변환합니다.
     - 기본 컬럼(ID, 공통 속성)에 요청된 컴포넌트의 컬럼들을 병합합니다.
-2.  **reconstitute**:
+2.  reconstitute:
     - `Map<String, Object>` 형태의 로우 데이터를 받아 컴포넌트 객체를 생성합니다.
     - 최종적으로 AR의 정적 팩토리 메서드(`AR.reconstitute`)를 호출하여 객체를 복원합니다.
 
@@ -50,9 +53,9 @@ public List<Map<String, Object>> findAll(List<Class<? extends PostComponent>> co
 ```
 
 ## 4. Domain Factory의 이점
-- **기술 격리**: DB 테이블 구조나 SQL 컬럼 변경이 도메인 모델(AR)에 직접적인 영향을 주지 않도록 완충 작용을 합니다.
-- **성능 최적화**: `SELECT *`를 지양하고, 실제 비즈니스 로직 수행에 필요한 데이터만 정교하게 로드합니다.
-- **유연성**: 동일한 데이터 소스로부터 유스케이스의 맥락(Context)에 따라 서로 다른 형태의 컴포넌트 조합을 가진 모델을 복원할 수 있습니다.
+- 기술 격리: DB 테이블 구조나 SQL 컬럼 변경이 도메인 모델(AR)에 직접적인 영향을 주지 않도록 완충 작용을 합니다.
+- 성능 최적화: `SELECT *`를 지양하고, 실제 비즈니스 로직 수행에 필요한 데이터만 정교하게 로드합니다.
+- 유연성: 동일한 데이터 소스로부터 유스케이스의 맥락(Context)에 따라 서로 다른 형태의 컴포넌트 조합을 가진 모델을 복원할 수 있습니다.
 
 ## 5. Factory Adapter 구현 예시
 

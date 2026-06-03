@@ -5,10 +5,10 @@ Domain Component(이하 VO, Value Object)는 애그리거트 루트(AR)의 속�
 
 ## 2. 핵심 설계 원칙
 
-1.  **불변성 (Immutability)**: 생성 후 상태가 변하지 않아야 합니다. Java `record` 사용을 원칙으로 합니다.
-2.  **논리적 응집 (Cohesion)**: 서로 밀접하게 연관된 속성들을 하나의 단위로 묶습니다 (예: `username`, `email` -> `UserProfile`).
-3.  **자가 로직 소유 (Logic Possession)**: 해당 데이터에 대한 검증이나 판단 로직은 VO 내부에서 처리합니다 (예: IP 대역 체크, 날짜 만료 여부).
-4.  **자가 유효성 검증**: 생성자에서 필수 값 누락이나 형식 오류를 검증하여, 항상 유효한 상태의 객체만 존재하도록 보장합니다.
+1.  불변성 (Immutability): 생성 후 상태가 변하지 않아야 합니다. Java `record` 사용을 원칙으로 합니다.
+2.  논리적 응집 (Cohesion): 서로 밀접하게 연관된 속성들을 하나의 단위로 묶습니다 (예: `username`, `email` -> `UserProfile`).
+3.  자가 로직 소유 (Logic Possession): 해당 데이터에 대한 검증이나 판단 로직은 VO 내부에서 처리합니다 (예: IP 대역 체크, 날짜 만료 여부).
+4.  자가 유효성 검증: 생성자에서 필수 값 누락이나 형식 오류를 검증하여, 항상 유효한 상태의 객체만 존재하도록 보장합니다.
 
 ## 3. 구현 패턴: Sealed Interface Grouping
 
@@ -21,9 +21,9 @@ public sealed interface MyArComponent permits ComponentA, ComponentB, StatusEnum
 ```
 
 ### 이점
-- **가독성**: AR이 어떤 데이터 그룹으로 구성되어 있는지 한눈에 파악 가능합니다.
-- **타입 안전성**: 특정 AR 전용 컴포넌트임을 컴파일 타임에 보장합니다.
-- **Factory 연동**: `ArFactory`에서 선택적 로딩(Selective Loading) 시 마커 인터페이스로 활용됩니다.
+- 가독성: AR이 어떤 데이터 그룹으로 구성되어 있는지 한눈에 파악 가능합니다.
+- 타입 안전성: 특정 AR 전용 컴포넌트임을 컴파일 타임에 보장합니다.
+- Factory 연동: `ArFactory`에서 선택적 로딩(Selective Loading) 시 마커 인터페이스로 활용됩니다.
 
 ## 4. 세부 구현 지침
 
