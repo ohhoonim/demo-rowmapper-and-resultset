@@ -3,16 +3,15 @@ package dev.ohhoonim.business.cart.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
+import dev.ohhoonim.component.model.unit.ValueObject;
 
 @ValueObject
-public sealed interface CartComponent permits 
-    CartComponent.Product, 
-    CartComponent.SelectedOption, 
-    CartComponent.OrderEstimatedAmount, 
-    CartComponent.BehaviorType,
-    CartComponent.Money {
+public sealed interface CartComponent permits CartComponent.Product, CartComponent.SelectedOption,
+        CartComponent.OrderEstimatedAmount, CartComponent.BehaviorType, CartComponent.Money,
+        CartComponent.CartMeta {
 
-    record Product(UUID id, String name, Money basePrice, String imageUrl) implements CartComponent {
+    record Product(UUID id, String name, Money basePrice, String imageUrl)
+            implements CartComponent {
         public Product {
             Objects.requireNonNull(id, "상품 ID는 필수입니다.");
             Objects.requireNonNull(name, "상품명은 필수입니다.");
@@ -20,7 +19,8 @@ public sealed interface CartComponent permits
         }
     }
 
-    record SelectedOption(Long optionId, String optionName, Money additionalPrice) implements CartComponent {
+    record SelectedOption(Long optionId, String optionName, Money additionalPrice)
+            implements CartComponent {
         public SelectedOption {
             Objects.requireNonNull(optionId, "옵션 ID는 필수입니다.");
             Objects.requireNonNull(optionName, "옵션명은 필수입니다.");
@@ -28,12 +28,8 @@ public sealed interface CartComponent permits
         }
     }
 
-    record OrderEstimatedAmount(
-        Money totalProductPrice,
-        Money totalDiscountPrice,
-        Money deliveryFee,
-        Money finalPaymentAmount
-    ) implements CartComponent {
+    record OrderEstimatedAmount(Money totalProductPrice, Money totalDiscountPrice,
+            Money deliveryFee, Money finalPaymentAmount) implements CartComponent {
         public OrderEstimatedAmount {
             Objects.requireNonNull(totalProductPrice, "총 상품 금액은 필수입니다.");
             Objects.requireNonNull(totalDiscountPrice, "총 할인 금액은 필수입니다.");
@@ -71,5 +67,23 @@ public sealed interface CartComponent permits
         public Money times(int multiplier) {
             return new Money(this.amount.multiply(BigDecimal.valueOf(multiplier)));
         }
+    }
+
+    public record CartMeta(String tag) implements CartComponent {
+    }
+
+    public static <T extends CartComponent> T narrow(CartComponent component,
+            Class<T> targetType) {
+        Object matched = switch (component) {
+            case Product p -> p;
+            case SelectedOption o -> o;
+            case OrderEstimatedAmount a -> a;
+            case BehaviorType b -> b;
+            case Money m -> m;
+            case CartMeta meta -> meta;
+            case null -> null;
+        };
+
+        return targetType.cast(matched);
     }
 }

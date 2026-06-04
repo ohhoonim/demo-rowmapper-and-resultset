@@ -34,7 +34,7 @@ class CartServiceTest {
         // Given
         Product product = new Product(UUID.randomUUID(), "상품", Money.of(10000), "img.png");
         SelectedOption option = new SelectedOption(1L, "옵션", Money.ZERO);
-        Cart cart = new Cart(new CartId.Creator().generate(), CUSTOMER_ID, OPERATOR);
+        Cart cart = new Cart(CartId.Creator.generate(), CUSTOMER_ID, OPERATOR);
         
         given(cartActivity.loadCart(CUSTOMER_ID)).willReturn(Optional.of(cart));
 
@@ -51,7 +51,7 @@ class CartServiceTest {
     @DisplayName("장바구니 조회 시 금액 계산 및 추천 상품을 포함해야 한다")
     void get_cart_view_test() {
         // Given
-        Cart cart = new Cart(new CartId.Creator().generate(), CUSTOMER_ID, OPERATOR);
+        Cart cart = new Cart(CartId.Creator.generate(), CUSTOMER_ID, OPERATOR);
         given(cartActivity.loadCart(CUSTOMER_ID)).willReturn(Optional.of(cart));
         given(deliveryPolicy.calculateDeliveryFee(any())).willReturn(Money.of(3000));
 

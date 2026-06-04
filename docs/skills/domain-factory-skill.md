@@ -39,7 +39,7 @@ public interface PostArFactory extends ArFactory<Post, PostId, PostComponent> {
     - 리플렉션을 사용하여 Record의 필드명을 DB 컬럼명(Snake Case)으로 자동 변환합니다.
     - 기본 컬럼(ID, 공통 속성)에 요청된 컴포넌트의 컬럼들을 병합합니다.
 2.  reconstitute:
-    - `Map<String, Object>` 형태의 로우 데이터를 받아 컴포넌트 객체를 생성합니다.
+    - `ResultSet` 형태의 로우 데이터를 받아 컴포넌트 객체를 생성합니다.
     - 최종적으로 AR의 정적 팩토리 메서드(`AR.reconstitute`)를 호출하여 객체를 복원합니다.
 
 ### Step 3: Repository와의 협업 (Adapter Layer)

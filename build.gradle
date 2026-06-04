@@ -50,6 +50,9 @@ dependencies {
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor:3.0.2'
 	asciidoctorExtensions 'org.asciidoctor:asciidoctorj:2.5.13'
+	// query log spy
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:2.0.1'
+
 }
 
 tasks.named('test') {

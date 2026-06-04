@@ -1,7 +1,10 @@
 package dev.ohhoonim.business.cart.model;
 
 import java.util.Objects;
-import static dev.ohhoonim.business.cart.model.CartComponent.*;
+import dev.ohhoonim.business.cart.model.CartComponent.Money;
+import dev.ohhoonim.business.cart.model.CartComponent.Product;
+import dev.ohhoonim.business.cart.model.CartComponent.SelectedOption;
+import dev.ohhoonim.component.model.unit.ValueObject;
 
 @ValueObject
 public record CartItem (

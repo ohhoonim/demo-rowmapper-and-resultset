@@ -2,6 +2,7 @@
 CREATE TABLE IF NOT EXISTS tb_cart (
     cart_id uuid,
     customer_id uuid NOT NULL,
+    tag text,
     created_at TIMESTAMPTZ(6) NOT NULL DEFAULT NOW(),
     created_by TEXT NOT NULL,
     modified_at TIMESTAMPTZ(6) NOT NULL DEFAULT NOW(),

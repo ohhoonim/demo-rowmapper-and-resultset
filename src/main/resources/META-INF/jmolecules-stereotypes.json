@@ -30,7 +30,7 @@
     "5sa.ArFactory": {
       "name": "AR Factory",
       "assignments": [
-        "dev.ohhoonim.component.model.factory.ArFactory"
+        "@dev.ohhoonim.component.model.unit.Factory"
       ],
       "groups": [
         "5sa"
@@ -85,6 +85,15 @@
       "name": "Adapter",
       "assignments": [
         "@dev.ohhoonim.component.model.unit.Policy"
+      ],
+      "groups": [
+        "5sa"
+      ]
+    },
+    "5sa.Exception": {
+      "name": "Adapter",
+      "assignments": [
+        "@dev.ohhoonim.component.model.unit.DomainException"
       ],
       "groups": [
         "5sa"

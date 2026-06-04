@@ -20,7 +20,7 @@ class CartTest {
     @DisplayName("장바구니에 상품을 새로 담거나 이미 있는 경우 수량을 합쳐야 한다")
     void add_product_test() {
         // Given
-        Cart cart = new Cart(new CartId.Creator().generate(), CUSTOMER_ID, OPERATOR);
+        Cart cart = new Cart(CartId.Creator.generate(), CUSTOMER_ID, OPERATOR);
         Product product = new Product(UUID.randomUUID(), "테스트 상품", Money.of(10000), "img.png");
         SelectedOption option = new SelectedOption(1L, "블랙/XL", Money.of(1000));
 
@@ -29,42 +29,42 @@ class CartTest {
 
         // Then
         assertThat(cart.getItems()).hasSize(1);
-        assertThat(cart.getItems().get(0).getQuantity()).isEqualTo(2);
+        assertThat(cart.getItems().get(0).quantity()).isEqualTo(2);
 
         // When: 동일 상품/옵션 추가 담기
         cart.addProduct(product, option, 3, OPERATOR);
 
         // Then: 수량 합산
         assertThat(cart.getItems()).hasSize(1);
-        assertThat(cart.getItems().get(0).getQuantity()).isEqualTo(5);
+        assertThat(cart.getItems().get(0).quantity()).isEqualTo(5);
     }
 
     @Test
     @DisplayName("장바구니 항목의 수량을 변경할 수 있어야 한다")
     void change_quantity_test() {
         // Given
-        Cart cart = new Cart(new CartId.Creator().generate(), CUSTOMER_ID, OPERATOR);
+        Cart cart = new Cart(CartId.Creator.generate(), CUSTOMER_ID, OPERATOR);
         Product product = new Product(UUID.randomUUID(), "테스트 상품", Money.of(10000), "img.png");
         SelectedOption option = new SelectedOption(1L, "블랙/XL", Money.of(1000));
         cart.addProduct(product, option, 2, OPERATOR);
-        CartItemId itemId = cart.getItems().get(0).getId();
+        CartItemId itemId = cart.getItems().get(0).id();
 
         // When
         cart.changeItemQuantity(itemId, 5, OPERATOR);
 
         // Then
-        assertThat(cart.getItems().get(0).getQuantity()).isEqualTo(5);
+        assertThat(cart.getItems().get(0).quantity()).isEqualTo(5);
     }
 
     @Test
     @DisplayName("수량은 1개 미만으로 변경할 수 없다")
     void change_quantity_validation_test() {
         // Given
-        Cart cart = new Cart(new CartId.Creator().generate(), CUSTOMER_ID, OPERATOR);
+        Cart cart = new Cart(CartId.Creator.generate(), CUSTOMER_ID, OPERATOR);
         Product product = new Product(UUID.randomUUID(), "테스트 상품", Money.of(10000), "img.png");
         SelectedOption option = new SelectedOption(1L, "블랙/XL", Money.of(1000));
         cart.addProduct(product, option, 2, OPERATOR);
-        CartItemId itemId = cart.getItems().get(0).getId();
+        CartItemId itemId = cart.getItems().get(0).id();
 
         // When & Then
         assertThatThrownBy(() -> cart.changeItemQuantity(itemId, 0, OPERATOR))
@@ -76,14 +76,14 @@ class CartTest {
     @DisplayName("장바구니에서 특정 항목을 삭제하거나 전체를 비울 수 있어야 한다")
     void remove_item_test() {
         // Given
-        Cart cart = new Cart(new CartId.Creator().generate(), CUSTOMER_ID, OPERATOR);
+        Cart cart = new Cart(CartId.Creator.generate(), CUSTOMER_ID, OPERATOR);
         Product p1 = new Product(UUID.randomUUID(), "상품1", Money.of(10000), "img1.png");
         Product p2 = new Product(UUID.randomUUID(), "상품2", Money.of(20000), "img2.png");
         SelectedOption opt = new SelectedOption(1L, "기본", Money.ZERO);
         
         cart.addProduct(p1, opt, 1, OPERATOR);
         cart.addProduct(p2, opt, 1, OPERATOR);
-        CartItemId p1ItemId = cart.getItems().get(0).getId();
+        CartItemId p1ItemId = cart.getItems().get(0).id();
 
         // When: 개별 삭제
         cart.removeItem(p1ItemId, OPERATOR);
@@ -98,7 +98,7 @@ class CartTest {
     @DisplayName("예상 결제 금액이 정확하게 계산되어야 한다")
     void calculate_amount_test() {
         // Given
-        Cart cart = new Cart(new CartId.Creator().generate(), CUSTOMER_ID, OPERATOR);
+        Cart cart = new Cart(CartId.Creator.generate(), CUSTOMER_ID, OPERATOR);
         Product product = new Product(UUID.randomUUID(), "상품", Money.of(10000), "img.png");
         SelectedOption option = new SelectedOption(1L, "옵션", Money.of(2000));
         cart.addProduct(product, option, 2, OPERATOR); // (10000 + 2000) * 2 = 24000

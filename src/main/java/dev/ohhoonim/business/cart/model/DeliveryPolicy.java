@@ -1,7 +1,6 @@
 package dev.ohhoonim.business.cart.model;
 
-import static dev.ohhoonim.business.cart.model.CartComponent.*;
-import dev.ohhoonim.component.model.unit.Policy;
+import dev.ohhoonim.business.cart.model.CartComponent.Money;
 
 public interface DeliveryPolicy {
     Money calculateDeliveryFee(Money totalProductPrice);

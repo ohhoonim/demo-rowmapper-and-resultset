@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import dev.ohhoonim.business.cart.model.CartComponent.CartMeta;
 import dev.ohhoonim.business.cart.model.CartComponent.Money;
 import dev.ohhoonim.business.cart.model.CartComponent.OrderEstimatedAmount;
 import dev.ohhoonim.business.cart.model.CartComponent.Product;
@@ -13,8 +14,9 @@ import dev.ohhoonim.business.cart.model.CartComponent.SelectedOption;
 import dev.ohhoonim.component.model.unit.BaseEntity;
 
 public class Cart extends BaseEntity<CartId> {
-    private final UUID customerId;
-    private final List<CartItem> items;
+    private UUID customerId;
+    private CartMeta meta;
+    private List<CartItem> items;
 
     // 초기 생성용 생성자
     public Cart(CartId id, UUID customerId, String operator) {
@@ -24,16 +26,16 @@ public class Cart extends BaseEntity<CartId> {
     }
 
     // DB 복원용 생성자
-    private Cart(CartId id, UUID customerId, List<CartItem> items,
+    private Cart(CartId id, UUID customerId, CartMeta meta, List<CartItem> items,
                  Instant createdAt, String createdBy, Instant modifiedAt, String modifiedBy ) {
         super(id, createdAt, createdBy, modifiedAt, modifiedBy);
         this.customerId = customerId;
         this.items = new ArrayList<>(items);
     }
 
-    public static Cart reconstitute(CartId id, UUID customerId, List<CartItem> items,
+    public static Cart reconstitute(CartId id, UUID customerId, CartMeta meta, List<CartItem> items,
                                     Instant createdAt, String createdBy, Instant modifiedAt, String modifiedBy) {
-        return new Cart(id, customerId, items, createdAt, createdBy, modifiedAt, modifiedBy);
+        return new Cart(id, customerId, meta, items, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     public List<CartItem> getItems() {
@@ -99,5 +101,9 @@ public class Cart extends BaseEntity<CartId> {
 
     public UUID getCustomerId() {
         return customerId;
+    }
+
+    public CartMeta getMeta() {
+        return meta;
     }
 }

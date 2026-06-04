@@ -1,4 +1,4 @@
-package dev.ohhoonim.business.cart.model;
+package dev.ohhoonim.component.model.unit;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -6,13 +6,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import org.jmolecules.stereotype.Stereotype;
-import org.springframework.stereotype.Component;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE })
 @Documented
 @Stereotype(groups = "5sa")
-@Component
 public @interface ValueObject {
     String value() default "";     
 }

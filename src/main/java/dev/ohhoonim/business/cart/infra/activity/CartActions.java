@@ -10,7 +10,6 @@ import dev.ohhoonim.business.cart.activity.out.CartRepository;
 import dev.ohhoonim.business.cart.model.Cart;
 import dev.ohhoonim.business.cart.model.CartBehaviorLog;
 import dev.ohhoonim.business.cart.model.CartComponent.Product;
-import dev.ohhoonim.business.cart.model.CartId;
 import dev.ohhoonim.component.model.unit.Activity;
 
 @Activity
@@ -27,9 +26,7 @@ public class CartActions implements CartActivity {
 
     @Override
     public Optional<Cart> loadCart(UUID customerId) {
-        var resultMap = cartRepository.findCartByCustomerId(customerId);
-
-        return resultMap.map(cart -> Cart.reconstitute(null, customerId, null, null, null, null, null)) ;
+        return cartRepository.findCartByCustomerId(customerId);
     }
 
     @Override
