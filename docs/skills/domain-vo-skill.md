@@ -45,7 +45,23 @@ public record AllowedIpRange(String cidr) implements UserComponent {
 
 ### 4.3 팩토리 및 DB 매핑
 - VO의 필드명은 `ArFactory`에서 리플렉션을 통해 DB 컬럼명(snake_case)으로 자동 매핑됩니다.
-- 필드명을 정의할 때 DB 스키마 컨벤션을 고려하십시오.
+- 필드명을 정의할 때 DB 스키마 컨벤션(`postgresql-convention-skill.md`)을 고려하십시오.
+- component interface는 `narrow` static method를 제공해야합니다. 
+
+#### narrow method 작성 예
+
+```java
+    public static <T extends UserComponent> T narrow(UserComponent component,
+           Class<T> targetType) {
+       Object matched = switch (component) {
+           case UserProfile p -> p;
+           case UserAuthorization o -> o;
+           case null -> null;
+       };
+
+       return targetType.cast(matched);
+```
+
 
 ## 5. 예시 (UserComponent.java 패턴)
 
@@ -70,9 +86,21 @@ public sealed interface UserComponent permits UserProfile, LoginInfo, UserAuthor
             assignedRoles = List.copyOf(Objects.requireNonNullElse(assignedRoles, List.of()));
         }
     }
+
+    public static <T extends UserComponent> T narrow(UserComponent component,
+           Class<T> targetType) {
+       Object matched = switch (component) {
+           case UserProfile p -> p;
+           case UserAuthorization o -> o;
+           case null -> null;
+       };
+
+       return targetType.cast(matched);
+   }
+
 }
 ```
 
 ## 6. 관련 가이드
-- `docs/aggregate-root-skill.md`: AR에서 VO를 사용하는 방법.
-- `docs/domain-factory-skill.md`: VO를 DB로부터 복원(Reconstitute)하는 방법.
+- `aggregate-root-skill.md`: AR에서 VO를 사용하는 방법.
+- `domain-factory-skill.md`: VO를 DB로부터 복원(Reconstitute)하는 방법.
