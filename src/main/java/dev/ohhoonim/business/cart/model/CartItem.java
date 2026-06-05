@@ -22,7 +22,7 @@ public record CartItem (
 
     public CartItem addQuantity(int quantity) {
         validateQuantity(quantity);
-        return new CartItem(id, product, option, quantity() + quantity);
+        return new CartItem(id, product, option, this.quantity + quantity);
     }
 
     public CartItem changeQuantity(int quantity) {

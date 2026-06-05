@@ -4,6 +4,6 @@ import dev.ohhoonim.business.cart.model.CartBehaviorLog;
 
 public interface CartBehaviorLogRepository {
 
-    void log(CartBehaviorLog log);
+    Long log(CartBehaviorLog log);
 
 }

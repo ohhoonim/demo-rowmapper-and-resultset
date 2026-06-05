@@ -78,4 +78,5 @@ public static MyAR reconstitute(MyId id, MyComponent component, MyStatus status,
 ## 5. 컴포넌트 (Value Objects)
 - 데이터 그룹은 `record`를 사용하여 불변성을 유지합니다.
 - `sealed interface [Name]Component` 패턴을 사용하여 한 AR에 속한 다양한 컴포넌트들을 한 곳에서 명시적으로 관리할 수 있습니다.
+- Value Object가 Aggregate Root에서 List 형태를 가지는 경우(Collection VO) `sealed interface [Name]Component` 패턴을 사용하지 않고 별개의 `record`로 작성한다.
 - 상세한 작성 방법은 `docs/domain-vo-skill.md`를 참조하십시오.

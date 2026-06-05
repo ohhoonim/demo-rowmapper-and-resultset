@@ -24,7 +24,7 @@ class CartBehaviorLogTest {
         // Then
         assertThat(log.getId()).isEqualTo(logId);
         assertThat(log.getCustomerId()).isEqualTo(customerId);
-        assertThat(log.getType()).isEqualTo(BehaviorType.ADD);
+        assertThat(log.getBehaviorType()).isEqualTo(BehaviorType.ADD);
         assertThat(log.getProductId()).isEqualTo(productId);
         assertThat(log.getCreatedBy()).isEqualTo(operator);
 
@@ -36,7 +36,7 @@ class CartBehaviorLogTest {
         );
 
         // Then
-        assertThat(reconstituted.getType()).isEqualTo(BehaviorType.REMOVE);
+        assertThat(reconstituted.getBehaviorType()).isEqualTo(BehaviorType.REMOVE);
         assertThat(reconstituted.getCreatedAt()).isEqualTo(now);
     }
 }

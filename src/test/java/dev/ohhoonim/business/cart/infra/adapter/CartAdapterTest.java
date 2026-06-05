@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Import;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.postgresql.PostgreSQLContainer;
+import dev.ohhoonim.business.cart.model.CartBehaviorLog;
+import dev.ohhoonim.business.cart.model.CartBehaviorLogId;
+import dev.ohhoonim.business.cart.model.CartComponent.BehaviorType;
 
 @Testcontainers
 @JdbcTest
@@ -32,5 +35,16 @@ public class CartAdapterTest {
             () -> assertThat(result).isEmpty()
         );
 
+    }
+
+    @Test
+    void behavior_log_test() {
+        var customerId = UUID.randomUUID(); 
+        var logId = CartBehaviorLogId.Creator.generate();
+        var productId = UUID.randomUUID();
+        var log = new CartBehaviorLog(logId, customerId, BehaviorType.ADD , productId, "SYSTEM");
+        Long result = adapter.log(log);
+
+        assertThat(result).isEqualTo(1L);
     }
 }

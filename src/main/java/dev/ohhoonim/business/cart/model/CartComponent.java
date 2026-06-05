@@ -10,6 +10,20 @@ public sealed interface CartComponent permits CartComponent.Product, CartCompone
         CartComponent.OrderEstimatedAmount, CartComponent.BehaviorType, CartComponent.Money,
         CartComponent.CartMeta {
 
+    public static <T extends CartComponent> T narrow(CartComponent component, Class<T> targetType) {
+        Object matched = switch (component) {
+            case Product p -> p;
+            case SelectedOption o -> o;
+            case OrderEstimatedAmount a -> a;
+            case BehaviorType b -> b;
+            case Money m -> m;
+            case CartMeta meta -> meta;
+            case null -> null;
+        };
+
+        return targetType.cast(matched);
+    }
+
     record Product(UUID id, String name, Money basePrice, String imageUrl)
             implements CartComponent {
         public Product {
@@ -38,7 +52,7 @@ public sealed interface CartComponent permits CartComponent.Product, CartCompone
         }
     }
 
-    enum BehaviorType implements CartComponent {
+    public enum BehaviorType implements CartComponent {
         ADD, REMOVE, QUANTITY_CHANGE
     }
 
@@ -72,18 +86,5 @@ public sealed interface CartComponent permits CartComponent.Product, CartCompone
     public record CartMeta(String tag) implements CartComponent {
     }
 
-    public static <T extends CartComponent> T narrow(CartComponent component,
-            Class<T> targetType) {
-        Object matched = switch (component) {
-            case Product p -> p;
-            case SelectedOption o -> o;
-            case OrderEstimatedAmount a -> a;
-            case BehaviorType b -> b;
-            case Money m -> m;
-            case CartMeta meta -> meta;
-            case null -> null;
-        };
 
-        return targetType.cast(matched);
-    }
 }

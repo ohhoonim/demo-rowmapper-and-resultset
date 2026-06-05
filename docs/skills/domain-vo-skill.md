@@ -62,8 +62,9 @@ public record AllowedIpRange(String cidr) implements UserComponent {
        return targetType.cast(matched);
 ```
 
+## 5. 예시 
 
-## 5. 예시 (UserComponent.java 패턴)
+### 5.1 sealed interface Grouping 패턴 
 
 ```java
 public sealed interface UserComponent permits UserProfile, LoginInfo, UserAuthorization {
@@ -101,6 +102,44 @@ public sealed interface UserComponent permits UserProfile, LoginInfo, UserAuthor
 }
 ```
 
-## 6. 관련 가이드
-- `aggregate-root-skill.md`: AR에서 VO를 사용하는 방법.
-- `domain-factory-skill.md`: VO를 DB로부터 복원(Reconstitute)하는 방법.
+### 5.2 Aggregate root 에서 VO가 List인 경우(Collection VO) 
+
+- `sealed interface` 패턴으로 구현하지 않고 별도의 `record`로 작성한다.
+- 데이터베이스에서 AR과 관계형 테이블로 구현하고 Collection VO에 VO전용 EntityId 필드를 추가한다. 
+- 중첩된 Collection VO를 사용하지 않는다. Collection VO 간의 다대다 관계 처리는 AR예서 중계처리가 가능하다. 중계처리가 불가능하다고 판단되는 경우 AR을 분리해야한다. 
+- Collection VO 내에서 사용하는 VO도 `sealed interface`에 구현한다.  
+- VO는 record로 작성되므로 VO 조작시 index를 통한 변경이 이루어지도록 주의한다. 
+
+```java
+// Collection VO를 가지는 Aggregate Root
+public class Cart extends BaseEntity<CartId> {
+    private UUID customerId;
+    private CartMeta meta;
+    private List<CartItem> items; // Collection VO
+    // 이하 생략
+}
+// EntityId를 부여한 Collection VO의 예
+public record CartItem (
+    CartItemId id, // EntityId를 구현
+    Product product, // sealed interface 에 등록된 VO
+    SelectedOption option, // sealed interface 에 등록된 VO
+    int quantity
+) {}
+
+// index를 통한 List 조작의 예
+public void addProduct(Product product, SelectedOption option, int quantity, String operator) {
+    int index = IntStream.range(0, items.size())
+            .filter(i -> items.get(i).isSameItem(product, option)).findFirst().orElse(-1);
+
+    if (index != -1) {
+        items.set(index, items.get(index).addQuantity(quantity));
+    } else {
+        items.add(new CartItem(CartItemId.Creator.generate(), product, option, quantity));
+    }
+    recordModification(operator);
+}
+```
+
+## 7. 관련 가이드
+- `aggregate-root-skill.md`: Aggregate Root 작성가이드
+- `domain-factory-skill.md`: VO를 DB로부터 복원(Reconstitute)하는 방법

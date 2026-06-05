@@ -7,14 +7,14 @@ import dev.ohhoonim.component.model.unit.BaseEntity;
 
 public class CartBehaviorLog extends BaseEntity<CartBehaviorLogId> {
     private final UUID customerId;
-    private final BehaviorType type;
+    private final BehaviorType behaviorType;
     private final UUID productId;
 
     // 초기 생성용 생성자
     public CartBehaviorLog(CartBehaviorLogId id, UUID customerId, BehaviorType type, UUID productId, String operator) {
         super(id, operator);
         this.customerId = customerId;
-        this.type = type;
+        this.behaviorType = type;
         this.productId = productId;
     }
 
@@ -23,7 +23,7 @@ public class CartBehaviorLog extends BaseEntity<CartBehaviorLogId> {
                             Instant createdAt, String createdBy, Instant modifiedAt, String modifiedBy) {
         super(id, createdAt, createdBy, modifiedAt, modifiedBy);
         this.customerId = customerId;
-        this.type = type;
+        this.behaviorType = type;
         this.productId = productId;
     }
 
@@ -36,8 +36,8 @@ public class CartBehaviorLog extends BaseEntity<CartBehaviorLogId> {
         return customerId;
     }
 
-    public BehaviorType getType() {
-        return type;
+    public BehaviorType getBehaviorType() {
+        return behaviorType;
     }
 
     public UUID getProductId() {

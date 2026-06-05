@@ -35,7 +35,7 @@ public class CartService {
         cartActivity.saveCart(cart);
 
         CartBehaviorLog log = new CartBehaviorLog(
-                new CartBehaviorLogId.Creator().generate(),
+                CartBehaviorLogId.Creator.generate(),
                 customerId,
                 BehaviorType.ADD,
                 product.id(),
@@ -58,7 +58,7 @@ public class CartService {
                 .findFirst()
                 .ifPresent(item -> {
                     CartBehaviorLog log = new CartBehaviorLog(
-                            new CartBehaviorLogId.Creator().generate(),
+                            CartBehaviorLogId.Creator.generate(),
                             customerId,
                             BehaviorType.QUANTITY_CHANGE,
                             item.product().id(),
@@ -85,7 +85,7 @@ public class CartService {
 
         if (productId != null) {
             CartBehaviorLog log = new CartBehaviorLog(
-                    new CartBehaviorLogId.Creator().generate(),
+                    CartBehaviorLogId.Creator.generate(),
                     customerId,
                     BehaviorType.REMOVE,
                     productId,

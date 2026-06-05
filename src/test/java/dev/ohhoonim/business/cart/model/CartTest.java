@@ -2,7 +2,9 @@ package dev.ohhoonim.business.cart.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -80,7 +82,7 @@ class CartTest {
         Product p1 = new Product(UUID.randomUUID(), "상품1", Money.of(10000), "img1.png");
         Product p2 = new Product(UUID.randomUUID(), "상품2", Money.of(20000), "img2.png");
         SelectedOption opt = new SelectedOption(1L, "기본", Money.ZERO);
-        
+
         cart.addProduct(p1, opt, 1, OPERATOR);
         cart.addProduct(p2, opt, 1, OPERATOR);
         CartItemId p1ItemId = cart.getItems().get(0).id();
@@ -104,8 +106,9 @@ class CartTest {
         cart.addProduct(product, option, 2, OPERATOR); // (10000 + 2000) * 2 = 24000
 
         // 배송비 정책: 3만원 미만 3000원, 이상 무료
-        DeliveryPolicy deliveryPolicy = (total) -> 
-            total.amount().compareTo(new BigDecimal("30000")) < 0 ? Money.of(3000) : Money.ZERO;
+        DeliveryPolicy deliveryPolicy =
+                (total) -> total.amount().compareTo(new BigDecimal("30000")) < 0 ? Money.of(3000)
+                        : Money.ZERO;
 
         // When
         OrderEstimatedAmount estimatedAmount = cart.calculateEstimatedAmount(deliveryPolicy);
@@ -129,4 +132,23 @@ class CartTest {
         assertThatThrownBy(() -> new Money(new BigDecimal("-1")))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("DB 복원시 items는 null 일 수 있다.")
+    void empty_items_test() {
+        var cart = Cart.reconstitute(CartId.Creator.generate(), CUSTOMER_ID, null, null,
+                Instant.now(), OPERATOR, Instant.now(), OPERATOR);
+
+        Product product = new Product(UUID.randomUUID(), "테스트 상품", Money.of(10000), "img.png");
+        SelectedOption option = new SelectedOption(1L, "블랙/XL", Money.of(1000));
+
+        cart.addProduct(product, option, 2, OPERATOR);
+        cart.addProduct(product, option, 3, OPERATOR);
+
+        assertAll(
+            () -> assertThat(cart.getItems()).hasSize(1), 
+            () -> assertThat(cart.getItems().stream().findFirst().get().quantity()).isEqualTo(5) 
+        );
+    }
+
 }
