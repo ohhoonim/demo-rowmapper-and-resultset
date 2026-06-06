@@ -31,7 +31,7 @@ public record CartItem (
     }
 
     public Money calculateSubTotal() {
-        Money unitPrice = product.basePrice().plus(option.additionalPrice());
+        Money unitPrice = product.productBasePrice().plus(option.optionAdditionalPrice());
         return unitPrice.times(quantity);
     }
 
@@ -42,7 +42,7 @@ public record CartItem (
     }
 
     public boolean isSameItem(Product product, SelectedOption option) {
-        return this.product.id().equals(product.id()) && 
+        return this.product.productId().equals(product.productId()) && 
                this.option.optionId().equals(option.optionId());
     }
 }

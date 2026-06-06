@@ -17,6 +17,9 @@ import tools.jackson.databind.PropertyNamingStrategies;
  */
 
 public interface ArFactory<A, I, C> {
+
+    Map<Class<?>, Function<ResultSet, ? extends C>> registry();
+
     A reconsitute(I id, List<Class<? extends C>> requiredVos, ResultSet rs) throws SQLException;
 
     /**

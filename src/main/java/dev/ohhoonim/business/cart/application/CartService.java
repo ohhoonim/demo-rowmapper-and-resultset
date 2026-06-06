@@ -38,7 +38,7 @@ public class CartService {
                 CartBehaviorLogId.Creator.generate(),
                 customerId,
                 BehaviorType.ADD,
-                product.id(),
+                product.productId(),
                 operator
         );
         cartActivity.logBehavior(log);
@@ -61,7 +61,7 @@ public class CartService {
                             CartBehaviorLogId.Creator.generate(),
                             customerId,
                             BehaviorType.QUANTITY_CHANGE,
-                            item.product().id(),
+                            item.product().productId(),
                             operator
                     );
                     cartActivity.logBehavior(log);
@@ -76,7 +76,7 @@ public class CartService {
         // Find product ID for logging before removal
         UUID productId = cart.getItems().stream()
                 .filter(item -> item.id().getPublicValue().equals(publicItemId))
-                .map(item -> item.product().id())
+                .map(item -> item.product().productId())
                 .findFirst()
                 .orElse(null);
 

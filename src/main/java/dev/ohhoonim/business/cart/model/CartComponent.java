@@ -24,21 +24,21 @@ public sealed interface CartComponent permits CartComponent.Product, CartCompone
         return targetType.cast(matched);
     }
 
-    record Product(UUID id, String name, Money basePrice, String imageUrl)
+    record Product(UUID productId, String productName, Money productBasePrice, String productImageUrl)
             implements CartComponent {
         public Product {
-            Objects.requireNonNull(id, "상품 ID는 필수입니다.");
-            Objects.requireNonNull(name, "상품명은 필수입니다.");
-            Objects.requireNonNull(basePrice, "기본 가격은 필수입니다.");
+            Objects.requireNonNull(productId, "상품 ID는 필수입니다.");
+            Objects.requireNonNull(productName, "상품명은 필수입니다.");
+            Objects.requireNonNull(productBasePrice, "기본 가격은 필수입니다.");
         }
     }
 
-    record SelectedOption(Long optionId, String optionName, Money additionalPrice)
+    record SelectedOption(Long optionId, String optionName, Money optionAdditionalPrice)
             implements CartComponent {
         public SelectedOption {
             Objects.requireNonNull(optionId, "옵션 ID는 필수입니다.");
             Objects.requireNonNull(optionName, "옵션명은 필수입니다.");
-            Objects.requireNonNull(additionalPrice, "추가 가격은 필수입니다.");
+            Objects.requireNonNull(optionAdditionalPrice, "추가 가격은 필수입니다.");
         }
     }
 
