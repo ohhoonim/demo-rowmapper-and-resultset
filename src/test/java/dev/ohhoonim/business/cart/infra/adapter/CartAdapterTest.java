@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.postgresql.PostgreSQLContainer;
@@ -31,6 +32,7 @@ import dev.ohhoonim.business.cart.model.CartId;
 import dev.ohhoonim.business.cart.model.CartItem;
 import dev.ohhoonim.business.cart.model.CartItemId;
 
+@Sql("/cart_schema.sql")
 @Testcontainers
 @JdbcTest
 @Import({CartRepositoryAdapter.class, CartArFactoryAdapter.class})
