@@ -27,8 +27,8 @@
         "5sa"
       ]
     },
-    "5sa.ArFactory": {
-      "name": "AR Factory",
+    "5sa.Factory": {
+      "name": "Factory",
       "assignments": [
         "@dev.ohhoonim.component.model.unit.Factory"
       ],
