@@ -70,14 +70,14 @@ public class CartEndpointTest {
 						fieldWithPath("data.customerId").description("고객 ID"),
 						fieldWithPath("data.items").description("장바구니 항목 목록"),
 						fieldWithPath("data.items[].itemId").description("항목 ID (Public)"),
-						fieldWithPath("data.items[].product.id").description("상품 ID"),
-						fieldWithPath("data.items[].product.name").description("상품명"),
-						fieldWithPath("data.items[].product.basePrice.amount")
+						fieldWithPath("data.items[].product.productId").description("상품 ID"),
+						fieldWithPath("data.items[].product.productName").description("상품명"),
+						fieldWithPath("data.items[].product.productBasePrice.amount")
 								.description("상품 기본가"),
-						fieldWithPath("data.items[].product.imageUrl").description("상품 이미지 URL"),
+						fieldWithPath("data.items[].product.productImageUrl").description("상품 이미지 URL"),
 						fieldWithPath("data.items[].option.optionId").description("옵션 ID"),
 						fieldWithPath("data.items[].option.optionName").description("옵션명"),
-						fieldWithPath("data.items[].option.additionalPrice.amount")
+						fieldWithPath("data.items[].option.optionAdditionalPrice.amount")
 								.description("옵션 추가 금액"),
 						fieldWithPath("data.items[].quantity").description("수량"),
 						fieldWithPath("data.items[].subTotal.amount").description("항목별 소계"),
@@ -108,13 +108,13 @@ public class CartEndpointTest {
 		result.assertThat()
 				.apply(document("cart-add-item",
 						requestFields(fieldWithPath("customerId").description("고객 ID"),
-								fieldWithPath("product.id").description("상품 ID"),
-								fieldWithPath("product.name").description("상품명"),
-								fieldWithPath("product.basePrice.amount").description("상품 기본가"),
-								fieldWithPath("product.imageUrl").description("상품 이미지 URL"),
+								fieldWithPath("product.productId").description("상품 ID"),
+								fieldWithPath("product.productName").description("상품명"),
+								fieldWithPath("product.productBasePrice.amount").description("상품 기본가"),
+								fieldWithPath("product.productImageUrl").description("상품 이미지 URL"),
 								fieldWithPath("option.optionId").description("옵션 ID"),
 								fieldWithPath("option.optionName").description("옵션명"),
-								fieldWithPath("option.additionalPrice.amount").description(
+								fieldWithPath("option.optionAdditionalPrice.amount").description(
 										"옵션 추가 금액"),
 								fieldWithPath("quantity").description("수량")),
 						responseFields(fieldWithPath("code").description("응답 코드"),

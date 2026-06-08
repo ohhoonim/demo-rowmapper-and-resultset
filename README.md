@@ -26,3 +26,7 @@
 - 장바구니: `docs/requirements/Cart-model.md` 
 - 유튜브 영상: [Agentic 도메인 모델 설계하기](https://youtu.be/6AA-xSFPvdU)
 
+## Logical Structure view
+Visual Studio Code에서 Logical Structure view를 이용할 수 있습니다. 
+
+![Logical Structure](docs/images/logical-structure.png)
