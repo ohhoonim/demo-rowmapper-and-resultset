@@ -18,6 +18,7 @@ Functional endpoints are split into two main components:
 - Method Mapping: Map HTTP methods using method references (e.g., `handler::getSomething`).
 
 ### Example Router
+
 ```java
 @Configuration
 public class MyRouter {
@@ -35,7 +36,7 @@ public class MyRouter {
 
 ## 3. Handler Implementation Guidelines
 
-- Class Annotation: Use `@Component` and `@RequiredArgsConstructor`.
+- Class Annotation: Use `@Component` 
 - Method Signature: Methods must accept `ServerRequest` and return `ServerResponse`.
 - Data Extraction:
     - Path Variables: `request.pathVariable("name")`
@@ -48,7 +49,6 @@ public class MyRouter {
 ### Example Handler
 ```java
 @Component
-@RequiredArgsConstructor
 public class MyHandler {
     private final MyService myService;
 
@@ -68,6 +68,9 @@ public class MyHandler {
 ## 4. Key Considerations
 
 - Filter Chains: Functional endpoints make it easy to apply cross-cutting concerns (logging, auth, response wrapping) via `.filter()`.
-- Validation: Manual validation might be needed if not using `@Valid` as in Controllers.
 - Error Handling: Exceptions can be handled globally or within the handler/filter.
 - Testing: Use `MockMvcTester` for testing functional routes.
+
+## 5. 관련문서
+
+- `slice-testing-skill.md`: Standards for endpoint testing and documentation.

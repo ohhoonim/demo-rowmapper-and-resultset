@@ -53,15 +53,18 @@
 
 ## Key References
 
-- `docs/skills/aggregate-root-skill.md`: AR 구성 가이드 
-- `docs/skills/domain-vo-skill.md`: Standards for Domain Components (Value Objects).
-- `docs/skills/architecture-spec.md`: Detailed 5-Step process and philosophy.
 - `docs/skills/5sa-model-skill.md`: 5SA Model Skill (공통 도메인 컴포넌트)
-- `docs/skills/factory-skill.md`: repository factory guide
-- `docs/skills/domain-module-skill.md`: Package and layer responsibility guide.
-- `docs/skills/functional-endpoint-skill.md`: Functional Endpoint Creation Skill guide
+- `docs/skills/aggregate-root-skill.md`: Aggregate Root 작성 가이드
+- `docs/skills/architecture-spec.md`: 5-Step Architecture Spec(Philosophy & Process)
+- `docs/skills/dependency-skill.md`: Dependency 가이드(Framework & Build tool)
+- `docs/skills/domain-factory-skill.md`: Domain Factory 작성 가이드
+- `docs/skills/domain-module-skill.md`: Domain Module 구성 가이드(Package, Layer)
+- `docs/skills/domain-vo-skill.md`: Domain Component (VO) 작성 가이드
+- `docs/skills/functional-endpoint-skill.md`: Functional Endpoint Creation Skill
 - `docs/skills/postgresql-convention-skill.md`: PostgreSQL 컨벤션 
+- `docs/skills/rest-docs-skill.md`: Spring REST Docs & Asciidoctor 작성 가이드
 - `docs/skills/service-orchestration-skill.md`: Service Orchestration 작성 가이드
 - `docs/skills/slice-testing-skill.md`: Standards for endpoint testing and documentation.
 - `docs/skills/state-model-skill.md`: State Model Skill (상태 모델 스킬)
+- `docs/skills/agentic-engineering-skill.md`: Agentic Engineering 가이드 
 - `src/main/java/dev/ohhoonim/component/model/unit/BaseEntity.java`: The foundation for all domain entities.
