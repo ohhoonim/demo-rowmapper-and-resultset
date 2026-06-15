@@ -9,6 +9,15 @@
         "5sa"
       ]
     },
+    "5sa.Entity": {
+      "name": "Entity",
+      "assignments": [
+        "dev.ohhoonim.component.model.unit.Entity"
+      ],
+      "groups": [
+        "5sa"
+      ]
+    },
     "5sa.AggregateRoot": {
       "name": "Aggregate Root",
       "assignments": [
